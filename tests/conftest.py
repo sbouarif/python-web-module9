@@ -12,10 +12,14 @@ def fastapi_server():
     Fixture to start the FastAPI server before E2E tests and stop it after tests complete.
     """
     # Start FastAPI app
-    fastapi_process = subprocess.Popen(['python', 'main.py'])
+    fastapi_process = subprocess.Popen([
+        'python', '-m', 'uvicorn', 'main:app',
+        '--host', '127.0.0.1',
+        '--port', '8001'
+    ])
     
     # Define the URL to check if the server is up
-    server_url = 'http://127.0.0.1:8000/'
+    server_url = 'http://127.0.0.1:8001/'
     
     # Wait for the server to start by polling the root endpoint
     timeout = 30  # seconds
