@@ -56,6 +56,22 @@ jobs:
       - name: Build image
         run: docker build -t app:test .
       
+      - name: Diagnose setuptools vulnerability
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'app:test'
+          format: 'json'
+          output: 'trivy-diagnostic.json'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy diagnostic report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-diagnostic
+          path: trivy-diagnostic.json
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
