@@ -15,8 +15,9 @@ RUN apt-get update && \
    groupadd -r appgroup && \
    useradd -r -g appgroup appuser
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+   COPY requirements.txt .
+   RUN pip install --no-cache-dir -r requirements.txt && \
+       python -m pip install --no-cache-dir --upgrade "setuptools>=78.1.1"
 
 # Install Chromium in a shared location
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
