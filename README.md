@@ -262,3 +262,65 @@ Then submit the GitHub repository link as instructed.
 - [Python Downloads](https://www.python.org/downloads/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [GitHub SSH Setup Guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+
+---
+
+# Module 10: Secure User Model and CI/CD Pipeline
+
+## Project Overview
+
+For Module 10, I enhanced my FastAPI application by implementing a secure user model using SQLAlchemy and Pydantic. The application includes password hashing and verification, user data validation, and database constraints to prevent duplicate usernames and email addresses.
+
+I also implemented unit and integration tests and configured a GitHub Actions CI/CD pipeline to automatically test the application, scan the Docker image for vulnerabilities, and deploy it to Docker Hub.
+
+## Running Tests Locally
+
+The project uses pytest for unit and integration testing. Integration tests require a running PostgreSQL database.
+
+**1. Start the Docker containers:**
+
+```bash
+docker compose up -d --build
+```
+
+**2. Run the unit and integration tests:**
+
+```bash
+docker compose exec -T web python -m pytest tests/unit/ tests/integration/ -q
+```
+
+**3. Stop the containers when finished:**
+
+```bash
+docker compose down
+```
+
+The tests cover password hashing and verification, Pydantic schema validation, user creation, and database uniqueness constraints.
+
+## GitHub Actions CI/CD
+
+The GitHub Actions workflow automatically runs when changes are pushed to the main branch.
+
+The pipeline consists of three stages:
+
+1. **Test:** Installs dependencies and runs automated tests using PostgreSQL.
+2. **Security:** Builds and scans the Docker image for vulnerabilities using Trivy.
+3. **Deploy:** Builds and pushes the Docker image to Docker Hub after the preceding stages succeed.
+
+All three stages completed successfully in the Module 10 workflow.
+
+## Docker Hub Deployment
+
+**Docker Hub Repository:** https://hub.docker.com/r/sb2786/601_module9
+
+**Pull the latest Docker image:**
+
+```bash
+docker pull sb2786/601_module9:latest
+```
+
+The Docker image is published for both AMD64 and ARM64 architectures.
+
+## GitHub Repository
+
+https://github.com/sbouarif/python-web-module9
