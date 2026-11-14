@@ -37,3 +37,7 @@ tomlkit==0.13.2
 typing_extensions==4.12.2
 urllib3==2.8.0
 uvicorn==0.32.0
+SQLAlchemy>=2.0,<3.0
+psycopg2-binary>=2.9,<3.0
+bcrypt>=4.0,<5.0
+email-validator>=2.0,<3.0
