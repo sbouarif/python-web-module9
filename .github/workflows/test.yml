@@ -8,7 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
      env:
-      DATABASE_URL: postgresql+psycopg2://user:password@localhost:5432/myappdb
+        DATABASE_URL: postgresql+psycopg2://user:password@localhost:5432/myappdb
     services:
       postgres:
         image: postgres:latest
