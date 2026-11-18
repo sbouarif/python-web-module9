@@ -1,9 +1,9 @@
 name: CI/CD
 on:
   push:
-    branches: [ main ]
+    branches: [ main, module11 ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, module11 ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -45,9 +45,8 @@ jobs:
       - name: Run tests
         run: |
           source venv/bin/activate
-          pytest tests/unit/ --cov=src --junitxml=test-results/junit.xml
-          pytest tests/integration/
-          pytest tests/e2e/
+          python -m pytest tests/unit/ tests/integration/ -v
+          python -m pytest tests/e2e/ -v
   security:
     needs: test
     runs-on: ubuntu-latest
@@ -83,7 +82,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
   deploy:
     needs: security
-    if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/module11'
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -100,8 +99,9 @@ jobs:
         with:
           push: true
           tags: |
-            sb2786/601_module9:latest
+            sb2786/601_module9:${{ github.ref_name == 'main' && 'latest' || 'module11' }}
             sb2786/601_module9:${{ github.sha }}
+
           platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=sb2786/601_module9:cache
           cache-to: type=inline,mode=max
