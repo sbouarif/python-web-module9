@@ -324,3 +324,64 @@ The Docker image is published for both AMD64 and ARM64 architectures.
 ## GitHub Repository
 
 https://github.com/sbouarif/python-web-module9
+
+
+## Module 11: Calculation Model and Validation
+
+Module 11 expands the FastAPI calculator project by adding a SQLAlchemy Calculation model, Pydantic validation schemas, and a calculation factory pattern. This module focuses on the database and validation layers without adding new calculation database endpoints.
+
+### Features
+
+- SQLAlchemy Calculation model with id, a, b, type, result, and created_at fields.
+- Pydantic CalculationCreate and CalculationRead schemas.
+- Validation for invalid operation types, division by zero, and non-finite numbers.
+- CalculationFactory supporting Add, Sub, Multiply, and Divide.
+- Unit tests and PostgreSQL integration tests.
+- GitHub Actions CI/CD pipeline for automated testing, security scanning, and Docker Hub deployment.
+
+### Run Tests Locally
+
+Start the application and PostgreSQL containers:
+
+```bash
+docker compose up -d --build
+```
+
+Run all unit and integration tests:
+
+```bash
+docker compose exec -T web python -m pytest tests/unit/ tests/integration/ -v
+```
+
+Run only the Module 11 unit tests:
+
+```bash
+docker compose exec -T web python -m pytest tests/unit/test_calculation.py -v
+```
+
+Run only the Module 11 PostgreSQL integration tests:
+
+```bash
+docker compose exec -T web python -m pytest tests/integration/test_calculation_database.py -v
+```
+
+Stop the containers:
+
+```bash
+docker compose down
+```
+
+### Docker Hub
+
+Repository: https://hub.docker.com/r/sb2786/601_module9
+
+Pull the Module 11 image:
+
+```bash
+docker pull sb2786/601_module9:module11
+```
+
+### GitHub Repository
+
+Module 11 branch:
+https://github.com/sbouarif/python-web-module9/tree/module11
