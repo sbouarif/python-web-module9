@@ -82,7 +82,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
   deploy:
     needs: security
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/module11'
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/module11' }}
     runs-on: ubuntu-latest
     environment: production
     steps:
