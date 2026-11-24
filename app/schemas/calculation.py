@@ -1,4 +1,3 @@
-
 from enum import Enum
 from math import isfinite
 
@@ -33,6 +32,10 @@ class CalculationCreate(BaseModel):
         if self.type == CalculationType.DIVIDE and self.b == 0:
             raise ValueError("Cannot divide by zero.")
         return self
+
+
+class CalculationUpdate(CalculationCreate):
+    """Validate updated calculation data."""
 
 
 class CalculationRead(BaseModel):
