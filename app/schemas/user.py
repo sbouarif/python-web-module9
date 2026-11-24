@@ -11,6 +11,13 @@ class UserCreate(BaseModel):
     password: str = Field(min_length=8)
 
 
+class UserLogin(BaseModel):
+    """Validate login information."""
+
+    username: str
+    password: str
+
+
 class UserRead(BaseModel):
     """Return user information without exposing passwords."""
 
