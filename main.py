@@ -1,6 +1,11 @@
 # main.py
 
 from fastapi import FastAPI, HTTPException, Request
+from app.db.database import engine
+from app.models.user import Base
+from app.models.calculation import Calculation
+from app.routes.users import router as users_router
+from app.routes.calculations import router as calculations_router
 from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field, field_validator  # Use @validator for Pydantic 1.x
@@ -14,6 +19,14 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+app.include_router(users_router)
+app.include_router(calculations_router)
+
+
+@app.on_event("startup")
+def create_tables():
+    Base.metadata.create_all(bind=engine)
 
 @app.get("/health")
 def health_check():
