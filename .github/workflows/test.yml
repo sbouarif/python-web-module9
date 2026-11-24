@@ -1,9 +1,9 @@
 name: CI/CD
 on:
   push:
-    branches: [ main, module11 ]
+    branches: [ main, module11, module12 ]
   pull_request:
-    branches: [ main, module11 ]
+    branches: [ main, module11, module12 ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -82,7 +82,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
   deploy:
     needs: security
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/module11' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/module11' || github.ref == 'refs/heads/module12' }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -99,7 +99,7 @@ jobs:
         with:
           push: true
           tags: |
-            sb2786/601_module9:${{ github.ref_name == 'main' && 'latest' || 'module11' }}
+            sb2786/601_module9:${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
             sb2786/601_module9:${{ github.sha }}
 
           platforms: linux/amd64,linux/arm64
