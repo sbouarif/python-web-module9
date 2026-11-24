@@ -385,3 +385,60 @@ docker pull sb2786/601_module9:module11
 
 Module 11 branch:
 https://github.com/sbouarif/python-web-module9/tree/module11
+
+
+## Module 12: User and Calculation Routes
+
+Module 12 adds user registration and login, along with calculation BREAD routes. The routes use the existing SQLAlchemy models, Pydantic schemas, and calculation factory from Modules 10 and 11.
+
+### Run the Application
+
+Start Docker Desktop, then run:
+
+```bash
+docker compose up -d --build
+```
+
+Open http://localhost:8000/docs to test the routes using FastAPI's OpenAPI documentation.
+
+### Available Routes
+
+- `POST /users/register` - Register a new user
+- `POST /users/login` - Verify a username and password
+- `GET /calculations` - Browse saved calculations
+- `GET /calculations/{calculation_id}` - Read a calculation
+- `POST /calculations` - Save a calculation
+- `PUT /calculations/{calculation_id}` - Edit a calculation
+- `DELETE /calculations/{calculation_id}` - Delete a calculation
+
+For registration, provide a username, valid email, and password of at least eight characters. To log in, provide the same username and password. Login verifies the credentials but does not issue a session token. The calculation routes do not require authentication in this module.
+
+### Run Tests
+
+```bash
+docker compose exec -T web python -m pytest tests/unit/ tests/integration/ -v
+```
+
+To run just the new Module 12 integration tests:
+
+```bash
+docker compose exec -T web python -m pytest tests/integration/test_module12_routes.py -v
+```
+
+To stop the containers:
+
+```bash
+docker compose down
+```
+
+### Docker Hub
+
+Repository: https://hub.docker.com/r/sb2786/601_module9
+
+```bash
+docker pull sb2786/601_module9:module12
+```
+
+### GitHub Repository
+
+https://github.com/sbouarif/python-web-module9/tree/module12
